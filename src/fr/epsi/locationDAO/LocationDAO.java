@@ -5,10 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
-import fr.epsi.location.Client;
 import fr.epsi.location.Location;
 
 public class LocationDAO {
@@ -77,7 +78,6 @@ public class LocationDAO {
 		} catch (SQLException e) {
 			System.out.println("exception lors de l'exécution de la requête:"+e.getMessage());
 		} finally {
-			//fermeture des ressources
 			try {
 				if (ps != null) {
 					ps.close();
@@ -89,5 +89,47 @@ public class LocationDAO {
 				System.out.println("exception lors de la fermeture des ressources:"+e.getMessage());
 			}
 		}
+	}
+	
+	public List<Location> getListeLocations(DataSource ds) {
+		
+		List<Location> liste = new ArrayList<Location>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String request = "SELECT * FROM LOCATION";
+		try {
+			conn = ds.getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(request);
+			
+			while(rs.next()) {
+				Location location = new Location();
+				location.setId(rs.getInt("loc_id"));
+				location.setDateLocation(rs.getDate("loc_date"));
+				location.setPrixLocation(rs.getDouble("loc_prix"));
+				location.setNbHeuresLocation(rs.getInt("loc_nbHeureLocation"));
+				liste.add(location);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			//fermeture des ressources
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Exception lors de la fermeture des ressources : "+e.getMessage());
+			}
+		}
+		return liste;
 	}
 }
