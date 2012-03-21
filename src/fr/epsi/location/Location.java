@@ -17,6 +17,9 @@ public class Location {
 		this.prixLocation = prixLocation;
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
+	public Location() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}
