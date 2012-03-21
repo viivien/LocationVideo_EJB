@@ -1,6 +1,6 @@
 package fr.epsi.location;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Location {
 	private int 	id;
@@ -8,6 +8,7 @@ public class Location {
 	private Date 	dateLocation;
 	private double 	prixLocation;
 	private int 	nbHeuresLocation;
+	private Client	client;
 	
 	public Location(Video video, Date dateLocation, double prixLocation,
 			int nbHeuresLocation) {
@@ -50,5 +51,10 @@ public class Location {
 	public void setNbHeuresLocation(int nbHeuresLocation) {
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
-	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }
