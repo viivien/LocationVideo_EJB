@@ -19,7 +19,6 @@ public class Location {
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
 	public Location() {
-		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
 		return id;

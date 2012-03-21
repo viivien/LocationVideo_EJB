@@ -15,18 +15,18 @@ import fr.epsi.location.Location;
 public class LocationDAO {
 	
 	public Location getLocation(DataSource ds, int idLocation) {
-		// préparation des ressources utilisées
-		Connection conn = null;
+		
+		Connection connexion = null;
 		Statement stmt 	= null;
 		ResultSet rs 	= null;
-		String request 	= "select * from LOCATION WHERE loc_id = " + idLocation;
+		String requete 	= "SELECT * FROM LOCATION WHERE loc_id = " + idLocation;
+		
 		try {
-			//exécution de la requête
-			conn 	= ds.getConnection();
-			stmt 	= conn.createStatement();
-			rs 		= stmt.executeQuery(request);
+				
+			connexion 	= ds.getConnection();
+			stmt 		= connexion.createStatement();
+			rs 			= stmt.executeQuery(requete);
 			
-			//parcours du résultat
 			if(rs.next()) {
 				Location location = new Location();
 				location.setId(rs.getInt("loc_id"));
@@ -39,22 +39,22 @@ public class LocationDAO {
 			
 		} 
 		catch (SQLException e) {
-			System.out.println("exception lors de l'exécution de la requête:"+e.getMessage());
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
 		} 
 		finally {
 			try {
-				if (rs 		!= null) {
+				if(rs != null)
 					rs.close();
-				}
-				if (stmt 	!= null) {
+				
+				if(stmt != null) 
 					stmt.close();
-				}
-				if (conn 	!= null) {
-					conn.close();
-				}
+				
+				if(connexion 	!= null)
+					connexion.close();
+				
 			} 
 			catch (SQLException e) {
-				System.out.println("exception lors de la fermeture des ressources:"+e.getMessage());
+				System.out.println("Exception lors de la fermeture des ressources : "+e.getMessage());
 			}
 		}
 		return null;
@@ -62,12 +62,12 @@ public class LocationDAO {
 
 	public void ajouterLocation(DataSource ds, Location location) {
 		
-		Connection conn = null;
+		Connection connexion = null;
 		PreparedStatement ps = null;
-		String request 	= "INSERT INTO LOCATION(loc_idclient, loc_idvideo, loc_date, loc_prix, loc_nbHeureLocation) VALUES(?,?,?,?,?)";
+		String requete 	= "INSERT INTO LOCATION(loc_idclient, loc_idvideo, loc_date, loc_prix, loc_nbHeureLocation) VALUES(?,?,?,?,?)";
 		try {
-			conn = ds.getConnection();
-			ps = conn.prepareStatement(request);
+			connexion = ds.getConnection();
+			ps = connexion.prepareStatement(requete);
 			ps.setInt(1, location.getClient().getId());
 			ps.setInt(2, location.getVideo().getId());
 			ps.setDate(3, location.getDateLocation());
@@ -76,32 +76,33 @@ public class LocationDAO {
 			ps.executeUpdate();
 			
 		} catch (SQLException e) {
-			System.out.println("exception lors de l'exécution de la requête:"+e.getMessage());
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
 		} finally {
 			try {
-				if (ps != null) {
+				if (ps != null)
 					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
+				
+				if (connexion != null)
+					connexion.close();
+				
 			} catch (SQLException e) {
-				System.out.println("exception lors de la fermeture des ressources:"+e.getMessage());
+				System.out.println("Exception lors de la fermeture des ressources : "+e.getMessage());
 			}
 		}
 	}
 	
 	public List<Location> getListeLocations(DataSource ds) {
 		
-		List<Location> liste = new ArrayList<Location>();
-		Connection conn = null;
+		List<Location> listeLocations = new ArrayList<Location>();
+		Connection connexion = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		String request = "SELECT * FROM LOCATION";
+		String requete = "SELECT * FROM LOCATION";
+		
 		try {
-			conn = ds.getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(request);
+			connexion = ds.getConnection();
+			stmt = connexion.createStatement();
+			rs = stmt.executeQuery(requete);
 			
 			while(rs.next()) {
 				Location location = new Location();
@@ -109,27 +110,26 @@ public class LocationDAO {
 				location.setDateLocation(rs.getDate("loc_date"));
 				location.setPrixLocation(rs.getDouble("loc_prix"));
 				location.setNbHeuresLocation(rs.getInt("loc_nbHeureLocation"));
-				liste.add(location);
+				listeLocations.add(location);
 			}
 			
 		} catch (SQLException e) {
 			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
 		} finally {
-			//fermeture des ressources
 			try {
-				if (rs != null) {
+				if (rs != null)
 					rs.close();
-				}
-				if (stmt != null) {
+				
+				if (stmt != null)
 					stmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
+				
+				if (connexion != null)
+					connexion.close();
+				
 			} catch (SQLException e) {
 				System.out.println("Exception lors de la fermeture des ressources : "+e.getMessage());
 			}
 		}
-		return liste;
+		return listeLocations;
 	}
 }
