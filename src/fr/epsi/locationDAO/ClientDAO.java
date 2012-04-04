@@ -6,20 +6,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import fr.epsi.location.Client;
+import fr.epsi.location.Video;
 
 public class ClientDAO {
 	
 	private Connection connection;
+	private Statement stmt;
+	private ResultSet rs;
+	private PreparedStatement ps;
 	
 	public Client getClient(DataSource ds, int idClient) {
 		// préparation des ressources utilisées
-		Statement stmt 	= null;
-		ResultSet rs 	= null;
-		String request 	= "select * from CLIENT where id = " + idClient;
+		String request 	= "SELECT * FROM CLIENT WHERE cli_id = " + idClient;
 		try {
 			//exécution de la requête
 			connection 	= ds.getConnection();
@@ -53,25 +57,58 @@ public class ClientDAO {
 		return null;
 	}
 	
+	public List<Client> getListeClients(DataSource ds) {
+		
+		List<Client> listeClients = new ArrayList<Client>();
+		String requete 	= "SELECT * FROM CLIENT";
+		try {
+			connection 	= ds.getConnection();
+			stmt 		= connection.createStatement();
+			rs 			= stmt.executeQuery(requete);
+			
+			while(rs.next()) {
+				Client client = new Client();
+				client.setId(rs.getInt("cli_id"));
+				client.setNom(rs.getString("cli_nom"));
+				client.setPrenom(rs.getString("cli_prenom"));
+				client.setDateDeNaissance(rs.getDate("cli_datedenaissance"));
+				client.setAdresse(rs.getString("cli_adresse"));
+				client.setVille(rs.getString("cli_ville"));
+				client.setCodePostal(rs.getString("cli_cp"));
+				client.setTelephone(rs.getString("cli_telephone"));
+				client.setMail(rs.getString("cli_email"));
+				client.setNom(rs.getString("cli_nom"));
+				client.setPassword(rs.getString("cli_password"));
+
+				listeClients.add(client);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, stmt, rs);
+		}
+		return listeClients;
+	}
+	
 	public void insereClient(DataSource ds, Client client) {
 		// préparation des ressources utilisées
-		PreparedStatement ps 	= null;
-		String request 			= 	"insert into CLIENT (cli_nom, cli_prenom, cli_datedenaissance, " +
-									"cli_adresse, cli_ville, cli_cp, cli_pays, cli_telephone, cli_mail, cli_password) values (?,?,?,?,?,?,?,?,?,?)";
+		String request 			= 	"INSERT INTO CLIENT (cli_nom, cli_prenom, cli_datedenaissance, " +
+									"cli_adresse, cli_ville, cli_cp, cli_pays, cli_telephone, cli_mail, cli_password) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			//exécution de la requête d'insertion
 			connection 	= ds.getConnection();
 			ps 			= connection.prepareStatement(request);
 			ps.setString(1, client.getNom());
-			ps.setString(1, client.getPrenom());
-			ps.setDate(1, 	(Date) client.getDateDeNaissance());
-			ps.setString(1, client.getAdresse());
-			ps.setString(1, client.getVille());
-			ps.setString(1, client.getCodePostal());
-			ps.setString(1, client.getPays());
-			ps.setString(1, client.getTelephone());
-			ps.setString(1, client.getMail());
-			ps.setString(1, client.getPassword());
+			ps.setString(2, client.getPrenom());
+			ps.setDate(3, 	(Date) client.getDateDeNaissance());
+			ps.setString(4, client.getAdresse());
+			ps.setString(5, client.getVille());
+			ps.setString(6, client.getCodePostal());
+			ps.setString(7, client.getPays());
+			ps.setString(8, client.getTelephone());
+			ps.setString(9, client.getMail());
+			ps.setString(10, client.getPassword());
 			ps.executeUpdate();
 			
 		} 
@@ -80,6 +117,46 @@ public class ClientDAO {
 		} 
 		finally {
 			Connecteur.closeConnection (connection, ps);
+		}
+	}
+	
+	public void modifierClient (DataSource ds, Client client, int idClient) {
+		String requete 	= 	"UPDATE CLIENT SET cli_nom = ?, cli_prenom = ?, cli_datedenaissance = ?, " +
+									"cli_adresse = ?, cli_ville = ?, cli_cp = ?, cli_pays = ?, cli_telephone = ?," +
+									" cli_mail = ?, cli_password = ? WHERE cli_id = " + idClient;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.setString(1, client.getNom());
+			ps.setString(2, client.getPrenom());
+			ps.setDate(3, 	(Date) client.getDateDeNaissance());
+			ps.setString(4, client.getAdresse());
+			ps.setString(5, client.getVille());
+			ps.setString(6, client.getCodePostal());
+			ps.setString(7, client.getPays());
+			ps.setString(8, client.getTelephone());
+			ps.setString(9, client.getMail());
+			ps.setString(10, client.getPassword());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
+	}
+	
+	public void supprimerVideo (DataSource ds, int idClient) {
+		String requete 	= 	"DELETE FROM CLIENT WHERE cli_id = " + idClient;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
 		}
 	}
 }

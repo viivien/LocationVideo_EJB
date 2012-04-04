@@ -17,10 +17,12 @@ import fr.epsi.location.Video;
 public class VideoDAO {
 	
 	private Connection connection;
+	private Statement stmt;
+	private ResultSet rs;
+	private PreparedStatement ps;
+	
 	
 	public Video getVideo(DataSource ds, int idVideo) {
-		Statement stmt 	= null;
-		ResultSet rs 	= null;
 		String request 	= "SELECT * FROM VIDEO WHERE vid_id = " + idVideo;
 		try {
 			connection 	= ds.getConnection();
@@ -50,32 +52,8 @@ public class VideoDAO {
 		return null;
 	}
 	
-	public void ajouterVideo(DataSource ds, Video video) {
-		
-		PreparedStatement ps = null;
-		String requete 	= "INSERT INTO VIDEO (exe_dateachat, exe_idvideo) VALUES(?,?)";
-		try {
-			connection	= ds.getConnection();
-			ps 			= connection.prepareStatement(requete);
-			ps.setString (1, video.getTitre());
-			ps.setInt (2, video.getDuree());
-			ps.setDate (3, (Date) video.getDateSortie());
-			ps.setString (4, video.getSynopsis());
-			ps.setInt(5, video.getCategorie().getId());
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
-		} finally {
-			Connecteur.closeConnection(connection, ps);
-		}
-	}
-	
 	public List<Video> getListeVideos(DataSource ds) {
-		
 		List<Video> listeVideos = new ArrayList<Video>();
-		Statement stmt 	= null;
-		ResultSet rs 	= null;
 		String requete 	= "SELECT * FROM VIDEO";
 		
 		try {
@@ -103,5 +81,58 @@ public class VideoDAO {
 			Connecteur.closeConnection(connection, stmt, rs);
 		}
 		return listeVideos;
+	}
+	
+	public void ajouterVideo(DataSource ds, Video video) {
+		String requete 	= "INSERT INTO VIDEO (exe_dateachat, exe_idvideo) VALUES(?,?)";
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.setString (1, video.getTitre());
+			ps.setInt (2, video.getDuree());
+			ps.setDate (3, (Date) video.getDateSortie());
+			ps.setString (4, video.getSynopsis());
+			ps.setInt(5, video.getCategorie().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
+	}
+	
+	public void modifierVideo (DataSource ds, Video video, int idVideo) {
+		String requete 	= 	"UPDATE VIDEO SET vid_titre = ?, vid_duree = ?, vid_dateSortie = ?, " +
+							"vid_synopsis = ?, vid_idcat = ? WHERE vid_id = " + idVideo;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.setString (1, video.getTitre());
+			ps.setInt (2, video.getDuree());
+			ps.setDate (3, (Date) video.getDateSortie());
+			ps.setString (4, video.getSynopsis());
+			ps.setInt(5, video.getCategorie().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
+	}
+	
+	public void supprimerVideo (DataSource ds, int idVideo) {
+		String requete 	= 	"DELETE FROM VIDEO WHERE vid_id = " + idVideo;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
 	}
 }

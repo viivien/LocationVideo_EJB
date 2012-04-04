@@ -17,10 +17,11 @@ import fr.epsi.location.Video;
 public class ExemplaireDAO {
 	
 	private Connection connection;
+	private Statement stmt;
+	private ResultSet rs;
+	private PreparedStatement ps;
 	
 	public Exemplaire getExemplaire(DataSource ds, int idExemplaire) {
-		Statement stmt 	= null;
-		ResultSet rs 	= null;
 		String requete 	= "SELECT * FROM EXEMPLAIRE WHERE exe_id = " + idExemplaire;
 		
 		try {
@@ -47,29 +48,9 @@ public class ExemplaireDAO {
 		return null;
 	}
 
-	public void ajouterExemplaire(DataSource ds, Exemplaire exemplaire) {
-		
-		PreparedStatement ps = null;
-		String requete 	= "INSERT INTO EXEMPLAIRE(exe_dateachat, exe_idvideo) VALUES(?,?)";
-		try {
-			connection	= ds.getConnection();
-			ps 			= connection.prepareStatement(requete);
-			ps.setDate(1, (Date) exemplaire.getDateAchat());
-			ps.setInt(2, exemplaire.getVideo().getId());
-			ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
-		} finally {
-			Connecteur.closeConnection(connection, ps);
-		}
-	}
-	
 	public List<Exemplaire> getListeExemplaires(DataSource ds) {
 		
 		List<Exemplaire> listeExemplaires = new ArrayList<Exemplaire>();
-		Statement stmt 	= null;
-		ResultSet rs 	= null;
 		String requete 	= "SELECT * FROM EXEMPLAIRE";
 		
 		try {
@@ -92,5 +73,52 @@ public class ExemplaireDAO {
 			Connecteur.closeConnection(connection, stmt, rs);
 		}
 		return listeExemplaires;
+	}
+	
+	public void ajouterExemplaire(DataSource ds, Exemplaire exemplaire) {
+		
+		String requete 	= "INSERT INTO EXEMPLAIRE(exe_dateachat, exe_idvideo) VALUES(?,?)";
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.setDate(1, (Date) exemplaire.getDateAchat());
+			ps.setInt(2, exemplaire.getVideo().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
+	}
+	
+	public void modifierExemplaire (DataSource ds, Exemplaire exemplaire, int idExemplaire) {
+		String requete 	= 	"UPDATE EXEMPLAIRE SET exe_dateachat = ?, exe_idvideo = ? WHERE exe_id = " + idExemplaire;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.setDate(1, (Date) exemplaire.getDateAchat());
+			ps.setInt(2, exemplaire.getVideo().getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
+	}
+	
+	public void supprimerVideo (DataSource ds, int idExemplaire) {
+		String requete 	= 	"DELETE FROM EXEMPLAIRE WHERE exe_id = " + idExemplaire;
+		try {
+			connection	= ds.getConnection();
+			ps 			= connection.prepareStatement(requete);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Exception lors de l'exécution de la requête : "+e.getMessage());
+		} finally {
+			Connecteur.closeConnection(connection, ps);
+		}
 	}
 }
