@@ -1,5 +1,10 @@
 package fr.epsi.location;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Categorie {
 	
 	private int 	id;
@@ -14,7 +19,9 @@ public class Categorie {
 		super();
 		this.libelle = libelle;
 	}
-
+	
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}

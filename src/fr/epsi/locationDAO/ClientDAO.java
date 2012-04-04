@@ -13,18 +13,18 @@ import fr.epsi.location.Client;
 
 public class ClientDAO {
 	
+	private Connection connection;
 	
 	public Client getClient(DataSource ds, int idClient) {
 		// préparation des ressources utilisées
-		Connection conn = null;
 		Statement stmt 	= null;
 		ResultSet rs 	= null;
 		String request 	= "select * from CLIENT where id = " + idClient;
 		try {
 			//exécution de la requête
-			conn 	= ds.getConnection();
-			stmt 	= conn.createStatement();
-			rs 		= stmt.executeQuery(request);
+			connection 	= ds.getConnection();
+			stmt 		= connection.createStatement();
+			rs 			= stmt.executeQuery(request);
 			
 			//parcours du résultat
 			if(rs.next()) {
@@ -48,37 +48,20 @@ public class ClientDAO {
 			System.out.println("exception lors de l'exécution de la requête:"+e.getMessage());
 		} 
 		finally {
-			//fermeture des ressources
-			try {
-				if (rs 		!= null) {
-					rs.close();
-				}
-				if (stmt 	!= null) {
-					stmt.close();
-				}
-				if (conn 	!= null) {
-					conn.close();
-				}
-			} 
-			catch (SQLException e) {
-				System.out.println("exception lors de la fermeture des ressources:"+e.getMessage());
-			}
+			Connecteur.closeConnection (connection, stmt, rs);
 		}
 		return null;
 	}
 	
-	
-	
 	public void insereClient(DataSource ds, Client client) {
 		// préparation des ressources utilisées
-		Connection conn 		= null;
 		PreparedStatement ps 	= null;
 		String request 			= 	"insert into CLIENT (cli_nom, cli_prenom, cli_datedenaissance, " +
 									"cli_adresse, cli_ville, cli_cp, cli_pays, cli_telephone, cli_mail, cli_password) values (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			//exécution de la requête d'insertion
-			conn 	= ds.getConnection();
-			ps 		= conn.prepareStatement(request);
+			connection 	= ds.getConnection();
+			ps 			= connection.prepareStatement(request);
 			ps.setString(1, client.getNom());
 			ps.setString(1, client.getPrenom());
 			ps.setDate(1, 	(Date) client.getDateDeNaissance());
@@ -96,18 +79,7 @@ public class ClientDAO {
 			System.out.println("exception lors de l'exécution de la requête:"+e.getMessage());
 		} 
 		finally {
-			//fermeture des ressources
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} 
-			catch (SQLException e) {
-				System.out.println("exception lors de la fermeture des ressources:"+e.getMessage());
-			}
+			Connecteur.closeConnection (connection, ps);
 		}
 	}
 }

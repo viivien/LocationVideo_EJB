@@ -3,6 +3,11 @@ package fr.epsi.location;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Client {
 	
 	private int 	id;
@@ -42,6 +47,14 @@ public class Client {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -102,12 +115,6 @@ public class Client {
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public HashMap<Integer, Location> getListeLocations() {
 		return listeLocations;

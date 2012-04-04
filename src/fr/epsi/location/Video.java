@@ -2,6 +2,11 @@ package fr.epsi.location;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Video {
 	
 	private int 		id;
@@ -20,7 +25,13 @@ public class Video {
 		this.synopsis = synopsis;
 		this.categorie = categorie;
 	}
+	
+	public Video() {
+		// TODO Auto-generated constructor stub
+	}
 
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}

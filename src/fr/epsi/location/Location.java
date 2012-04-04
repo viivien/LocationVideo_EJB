@@ -2,35 +2,44 @@ package fr.epsi.location;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Location {
-	private int 	id;
-	private Video 	video;
-	private Date 	dateLocation;
-	private double 	prixLocation;
-	private int 	nbHeuresLocation;
-	private Client	client;
+	private int 		id;
+	private Exemplaire 	exemplaire;
+	private Date 		dateLocation;
+	private double 		prixLocation;
+	private int 		nbHeuresLocation;
+	private Client		client;
 	
-	public Location(Video video, Date dateLocation, double prixLocation,
+	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation,
 			int nbHeuresLocation) {
 		super();
-		this.video = video;
-		this.dateLocation = dateLocation;
-		this.prixLocation = prixLocation;
-		this.nbHeuresLocation = nbHeuresLocation;
+		this.exemplaire 		= exemplaire;
+		this.dateLocation 		= dateLocation;
+		this.prixLocation 		= prixLocation;
+		this.nbHeuresLocation 	= nbHeuresLocation;
 	}
 	public Location() {
+	
 	}
+	
+	@Id
+	@GeneratedValue
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Video getVideo() {
-		return video;
+	public Exemplaire getExemplaire() {
+		return exemplaire;
 	}
-	public void setVideo(Video video) {
-		this.video = video;
+	public void setExemplaire(Exemplaire exemplaire) {
+		this.exemplaire = exemplaire;
 	}
 	public Date getDateLocation() {
 		return dateLocation;
