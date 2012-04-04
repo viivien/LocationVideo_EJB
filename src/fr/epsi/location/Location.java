@@ -8,6 +8,7 @@ public class Location {
 	private Date 	dateLocation;
 	private double 	prixLocation;
 	private int 	nbHeuresLocation;
+	private Client	client;
 	
 	public Location(Video video, Date dateLocation, double prixLocation,
 			int nbHeuresLocation) {
@@ -16,6 +17,8 @@ public class Location {
 		this.dateLocation = dateLocation;
 		this.prixLocation = prixLocation;
 		this.nbHeuresLocation = nbHeuresLocation;
+	}
+	public Location() {
 	}
 	public int getId() {
 		return id;
@@ -47,5 +50,10 @@ public class Location {
 	public void setNbHeuresLocation(int nbHeuresLocation) {
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
-	
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
 }
