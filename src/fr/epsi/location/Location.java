@@ -1,6 +1,6 @@
 package fr.epsi.location;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Location {
 	private int 	id;
