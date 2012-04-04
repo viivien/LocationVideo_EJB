@@ -29,16 +29,24 @@ CREATE TABLE CLIENT (
 	CONSTRAINT PK_CLIENT PRIMARY KEY(cli_id)
 );
 
+CREATE TABLE EXEMPLAIRE (
+	exe_id INT NOT NULL,
+	exe_dateachat DATETIME NOT NULL,
+	exe_idvideo INT NOT NULL,
+	CONSTRAINT PK_EXEMPLAIRE PRIMARY KEY(exe_id),
+	CONSTRAINT FK_VIDEO FOREIGN KEY(exe_idvideo) REFERENCES VIDEO(vid_id)
+);
+
 CREATE TABLE LOCATION (
 	loc_id INT NOT NULL,
 	loc_idclient INT NOT NULL,
-	loc_idvideo INT NOT NULL,
+	loc_idexemplaire INT NOT NULL,
 	loc_date DATETIME NOT NULL,
 	loc_prix DECIMAL(5,2) NOT NULL,
 	loc_nbHeureLocation INT NOT NULL,
 	CONSTRAINT PK_LOCATION PRIMARY KEY(loc_id),
 	CONSTRAINT FK_CLIENT FOREIGN KEY(loc_idclient) REFERENCES CLIENT(cli_id),
-	CONSTRAINT FK_VIDEO FOREIGN KEY(loc_idvideo) REFERENCES VIDEO(v_id)
+	CONSTRAINT FK_EXEMPLAIRE FOREIGN KEY(loc_idvideo) REFERENCES VIDEO(v_id)
 );
 
 INSERT INTO CATEGORIE(cat_libelle) VALUES('Thriller');
@@ -47,5 +55,8 @@ INSERT INTO CATEGORIE(cat_libelle) VALUES('Epouvante/Horreur');
 INSERT INTO CATEGORIE(cat_libelle) VALUES('Comédie');
 INSERT INTO CATEGORIE(cat_libelle) VALUES('Romance');
 
-/* A CONTINUER */
+/*
+INSERT INTO CLIENT(cli_nom, cli_prenom, cli_datedenaissance, cli_adresse, cli_ville, cli_cp, cli_telephone, cli_email, cli_password)
+VALUES('CLAUDE', 'Jean', '01/01/1985', '1 rue de là bas', 'Bordeaux', '33000', '0512590285', 'jclaude@test.com', md5(
+ A CONTINUER */
 
