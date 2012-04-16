@@ -1,7 +1,6 @@
 package fr.epsi.locationDAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,9 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import fr.epsi.location.*;
+import fr.epsi.location.pojo.Categorie;
 
 public class CategorieDAO {
 	
@@ -20,13 +17,13 @@ public class CategorieDAO {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	
-	public Categorie getCategorie(DataSource ds, int idCategorie) {
+	public Categorie getCategorie(int idCategorie) {
 		Statement stmt 	= null;
 		ResultSet rs 	= null;
 		String request 	= "select * from CATEGORIE where id = " + idCategorie;
 		try {
 			
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(request);
 			
@@ -48,12 +45,12 @@ public class CategorieDAO {
 		return null;
 	}
 	
-	public List<Categorie> getListeCategories(DataSource ds) {
+	public List<Categorie> getListeCategories() {
 		List<Categorie> listeCategories = new ArrayList<Categorie>();
 		String requete 	= "SELECT * FROM CATEGORIE";
 		
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -74,10 +71,10 @@ public class CategorieDAO {
 		return listeCategories;
 	}
 	
-	public void ajouterCategorie(DataSource ds, Categorie categorie) {
+	public void ajouterCategorie(Categorie categorie) {
 		String requete 	= "INSERT INTO CATEGORIE (cat_libelle) VALUES(?)";
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setString (1, categorie.getLibelle());
 			ps.executeUpdate();
@@ -89,10 +86,10 @@ public class CategorieDAO {
 		}
 	}
 	
-	public void modifierCategorie (DataSource ds, Categorie categorie, int idCategorie) {
+	public void modifierCategorie (Categorie categorie, int idCategorie) {
 		String requete 	= 	"UPDATE CATEGORIE SET cat_libelle = ? WHERE cat_id = " + idCategorie;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setString (1, categorie.getLibelle());
 			ps.executeUpdate();
@@ -104,10 +101,10 @@ public class CategorieDAO {
 		}
 	}
 	
-	public void supprimerCategorie (DataSource ds, int idCategorie) {
+	public void supprimerCategorie (int idCategorie) {
 		String requete 	= 	"DELETE FROM CATEGORIE WHERE cat_id = " + idCategorie;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.executeUpdate();
 			

@@ -9,10 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import fr.epsi.location.Exemplaire;
-import fr.epsi.location.Video;
+import fr.epsi.location.pojo.Video;
 
 public class VideoDAO {
 	
@@ -22,10 +19,10 @@ public class VideoDAO {
 	private PreparedStatement ps;
 	
 	
-	public Video getVideo(DataSource ds, int idVideo) {
+	public Video getVideo(int idVideo) {
 		String request 	= "SELECT * FROM VIDEO WHERE vid_id = " + idVideo;
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(request);
 			
@@ -36,7 +33,7 @@ public class VideoDAO {
 						rs.getInt("vid_duree"),
 						rs.getDate("vid_dateSortie"),
 						rs.getString("vid_synopsis"),
-						DAOcateg.getCategorie(ds, rs.getInt("vid_idcat"))
+						DAOcateg.getCategorie(rs.getInt("vid_idcat"))
 				);
 				video.setId(idVideo);
 				return video;
@@ -52,12 +49,12 @@ public class VideoDAO {
 		return null;
 	}
 	
-	public List<Video> getListeVideos(DataSource ds) {
+	public List<Video> getListeVideos() {
 		List<Video> listeVideos = new ArrayList<Video>();
 		String requete 	= "SELECT * FROM VIDEO";
 		
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -68,7 +65,7 @@ public class VideoDAO {
 						rs.getInt("vid_duree"),
 						rs.getDate("vid_dateSortie"),
 						rs.getString("vid_synopsis"),
-						DAOcateg.getCategorie(ds, rs.getInt("vid_idcat"))
+						DAOcateg.getCategorie(rs.getInt("vid_idcat"))
 				);
 				video.setId(rs.getInt("vid_id"));
 
@@ -83,10 +80,10 @@ public class VideoDAO {
 		return listeVideos;
 	}
 	
-	public void ajouterVideo(DataSource ds, Video video) {
+	public void ajouterVideo(Video video) {
 		String requete 	= "INSERT INTO VIDEO (exe_dateachat, exe_idvideo) VALUES(?,?)";
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setString (1, video.getTitre());
 			ps.setInt (2, video.getDuree());
@@ -102,11 +99,11 @@ public class VideoDAO {
 		}
 	}
 	
-	public void modifierVideo (DataSource ds, Video video, int idVideo) {
+	public void modifierVideo (Video video, int idVideo) {
 		String requete 	= 	"UPDATE VIDEO SET vid_titre = ?, vid_duree = ?, vid_dateSortie = ?, " +
 							"vid_synopsis = ?, vid_idcat = ? WHERE vid_id = " + idVideo;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setString (1, video.getTitre());
 			ps.setInt (2, video.getDuree());
@@ -122,10 +119,10 @@ public class VideoDAO {
 		}
 	}
 	
-	public void supprimerVideo (DataSource ds, int idVideo) {
+	public void supprimerVideo (int idVideo) {
 		String requete 	= 	"DELETE FROM VIDEO WHERE vid_id = " + idVideo;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.executeUpdate();
 			

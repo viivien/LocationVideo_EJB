@@ -8,11 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
 
-import fr.epsi.location.Exemplaire;
-import fr.epsi.location.Video;
+import fr.epsi.location.pojo.Exemplaire;
 
 public class ExemplaireDAO {
 	
@@ -21,12 +19,12 @@ public class ExemplaireDAO {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	
-	public Exemplaire getExemplaire(DataSource ds, int idExemplaire) {
+	public Exemplaire getExemplaire(int idExemplaire) {
 		String requete 	= "SELECT * FROM EXEMPLAIRE WHERE exe_id = " + idExemplaire;
 		
 		try {
 				
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -35,7 +33,7 @@ public class ExemplaireDAO {
 				exemplaire.setId(rs.getInt("exe_id"));
 				exemplaire.setDateAchat(rs.getDate("exe_dateachat"));
 				VideoDAO video 			= new VideoDAO ();
-				exemplaire.setVideo(video.getVideo(ds, rs.getInt("exe_idvideo")));
+				exemplaire.setVideo(video.getVideo(rs.getInt("exe_idvideo")));
 				return exemplaire;
 			}
 		} 
@@ -48,13 +46,13 @@ public class ExemplaireDAO {
 		return null;
 	}
 
-	public List<Exemplaire> getListeExemplaires(DataSource ds) {
+	public List<Exemplaire> getListeExemplaires() {
 		
 		List<Exemplaire> listeExemplaires = new ArrayList<Exemplaire>();
 		String requete 	= "SELECT * FROM EXEMPLAIRE";
 		
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -63,7 +61,7 @@ public class ExemplaireDAO {
 				exemplaire.setId(rs.getInt("exe_id"));
 				exemplaire.setDateAchat(rs.getDate("exe_dateachat"));
 				VideoDAO video 			= new VideoDAO ();
-				exemplaire.setVideo(video.getVideo(ds, rs.getInt("exe_idvideo")));
+				exemplaire.setVideo(video.getVideo(rs.getInt("exe_idvideo")));
 				listeExemplaires.add(exemplaire);
 			}
 			
@@ -75,11 +73,11 @@ public class ExemplaireDAO {
 		return listeExemplaires;
 	}
 	
-	public void ajouterExemplaire(DataSource ds, Exemplaire exemplaire) {
+	public void ajouterExemplaire(Exemplaire exemplaire) {
 		
 		String requete 	= "INSERT INTO EXEMPLAIRE(exe_dateachat, exe_idvideo) VALUES(?,?)";
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setDate(1, (Date) exemplaire.getDateAchat());
 			ps.setInt(2, exemplaire.getVideo().getId());
@@ -92,10 +90,10 @@ public class ExemplaireDAO {
 		}
 	}
 	
-	public void modifierExemplaire (DataSource ds, Exemplaire exemplaire, int idExemplaire) {
+	public void modifierExemplaire (Exemplaire exemplaire, int idExemplaire) {
 		String requete 	= 	"UPDATE EXEMPLAIRE SET exe_dateachat = ?, exe_idvideo = ? WHERE exe_id = " + idExemplaire;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setDate(1, (Date) exemplaire.getDateAchat());
 			ps.setInt(2, exemplaire.getVideo().getId());
@@ -108,10 +106,10 @@ public class ExemplaireDAO {
 		}
 	}
 	
-	public void supprimerVideo (DataSource ds, int idExemplaire) {
+	public void supprimerExemplaire (int idExemplaire) {
 		String requete 	= 	"DELETE FROM EXEMPLAIRE WHERE exe_id = " + idExemplaire;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.executeUpdate();
 			

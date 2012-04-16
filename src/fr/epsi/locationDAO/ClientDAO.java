@@ -9,10 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import fr.epsi.location.Client;
-import fr.epsi.location.Video;
+import fr.epsi.location.pojo.Client;
 
 public class ClientDAO {
 	
@@ -21,12 +18,12 @@ public class ClientDAO {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	
-	public Client getClient(DataSource ds, int idClient) {
+	public Client getClient(int idClient) {
 		// préparation des ressources utilisées
 		String request 	= "SELECT * FROM CLIENT WHERE cli_id = " + idClient;
 		try {
 			//exécution de la requête
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(request);
 			
@@ -57,12 +54,12 @@ public class ClientDAO {
 		return null;
 	}
 	
-	public List<Client> getListeClients(DataSource ds) {
+	public List<Client> getListeClients() {
 		
 		List<Client> listeClients = new ArrayList<Client>();
 		String requete 	= "SELECT * FROM CLIENT";
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -91,13 +88,13 @@ public class ClientDAO {
 		return listeClients;
 	}
 	
-	public void insereClient(DataSource ds, Client client) {
+	public void insereClient (Client client) {
 		// préparation des ressources utilisées
 		String request 			= 	"INSERT INTO CLIENT (cli_nom, cli_prenom, cli_datedenaissance, " +
 									"cli_adresse, cli_ville, cli_cp, cli_pays, cli_telephone, cli_mail, cli_password) VALUES (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			//exécution de la requête d'insertion
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(request);
 			ps.setString(1, client.getNom());
 			ps.setString(2, client.getPrenom());
@@ -120,12 +117,12 @@ public class ClientDAO {
 		}
 	}
 	
-	public void modifierClient (DataSource ds, Client client, int idClient) {
+	public void modifierClient (Client client, int idClient) {
 		String requete 	= 	"UPDATE CLIENT SET cli_nom = ?, cli_prenom = ?, cli_datedenaissance = ?, " +
 									"cli_adresse = ?, cli_ville = ?, cli_cp = ?, cli_pays = ?, cli_telephone = ?," +
 									" cli_mail = ?, cli_password = ? WHERE cli_id = " + idClient;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setString(1, client.getNom());
 			ps.setString(2, client.getPrenom());
@@ -146,10 +143,10 @@ public class ClientDAO {
 		}
 	}
 	
-	public void supprimerVideo (DataSource ds, int idClient) {
+	public void supprimerClient (int idClient) {
 		String requete 	= 	"DELETE FROM CLIENT WHERE cli_id = " + idClient;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.executeUpdate();
 			

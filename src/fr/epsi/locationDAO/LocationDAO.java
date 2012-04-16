@@ -1,7 +1,6 @@
 package fr.epsi.locationDAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,10 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import fr.epsi.location.Location;
-import fr.epsi.location.Video;
+import fr.epsi.location.pojo.Location;
 
 public class LocationDAO {
 	
@@ -21,12 +17,12 @@ public class LocationDAO {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	
-	public Location getLocation(DataSource ds, int idLocation) {
+	public Location getLocation(int idLocation) {
 		String requete 	= "SELECT * FROM LOCATION WHERE loc_id = " + idLocation;
 		
 		try {
 				
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -50,13 +46,13 @@ public class LocationDAO {
 		return null;
 	}
 
-	public List<Location> getListeLocations(DataSource ds) {
+	public List<Location> getListeLocations() {
 		
 		List<Location> listeLocations 	= new ArrayList<Location>();
 		String requete 					= "SELECT * FROM LOCATION";
 		
 		try {
-			connection 	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			stmt 		= connection.createStatement();
 			rs 			= stmt.executeQuery(requete);
 			
@@ -77,11 +73,11 @@ public class LocationDAO {
 		return listeLocations;
 	}
 	
-	public void ajouterLocation(DataSource ds, Location location) {
+	public void ajouterLocation(Location location) {
 		
 		String requete 			= "INSERT INTO LOCATION(loc_idclient, loc_idvideo, loc_date, loc_prix, loc_nbHeureLocation) VALUES(?,?,?,?,?)";
 		try {
-			connection 			= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 					= connection.prepareStatement(requete);
 			ps.setInt(1, location.getClient().getId());
 			ps.setInt(2, location.getExemplaire().getId());
@@ -97,11 +93,11 @@ public class LocationDAO {
 		}
 	}
 	
-	public void modifierLocation (DataSource ds, Location location, int idLocation) {
+	public void modifierLocation (Location location, int idLocation) {
 		String requete 	= 	"UPDATE LOCATION SET loc_idclient = ?, loc_idvideo = ?, loc_date = ?, loc_prix = ?," +
 							" loc_nbHeureLocation = ? WHERE loc_id = " + idLocation;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.setInt(1, location.getClient().getId());
 			ps.setInt(2, location.getExemplaire().getId());
@@ -117,10 +113,10 @@ public class LocationDAO {
 		}
 	}
 	
-	public void supprimerLocation (DataSource ds, int idLocation) {
+	public void supprimerLocation (int idLocation) {
 		String requete 	= 	"DELETE FROM LOCATION WHERE loc_id = " + idLocation;
 		try {
-			connection	= ds.getConnection();
+			connection 	= Connecteur.openConnection();
 			ps 			= connection.prepareStatement(requete);
 			ps.executeUpdate();
 			
