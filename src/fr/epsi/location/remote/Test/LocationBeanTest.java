@@ -16,17 +16,17 @@ import org.unitils.orm.jpa.annotation.JpaEntityManagerFactory;
 @DataSet
 public class LocationBeanTest extends UnitilsJUnit4 {
 
-@PersistenceContext
-EntityManager entityManager;
+	@PersistenceContext
+	EntityManager		entityManager;
 
-PersonRepository personRepository = new PersonRepositoryImpl();
+	PersonRepository	personRepository	= new PersonRepositoryImpl();
 
-@Before
-public void init() {
-JpaUnitils.injectJpaResourcesInto(personRepository);
-}
+	@Before
+	public void init() {
+		JpaUnitils.injectJpaResourcesInto(personRepository);
+	}
 
-@Test
+	@Test
 public void testSearchByLastName() {
 List result = personRepository.findByLastName("Doe")); 
 ReflectionAssert.assertPropertyLenEquals("firstName", Arrays.asList("John", "Jane"), result); 
