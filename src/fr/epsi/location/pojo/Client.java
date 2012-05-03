@@ -3,31 +3,34 @@ package fr.epsi.location.pojo;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Client implements java.io.Serializable {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2659391453478238804L;
-	private int 	id;
-	private String 	nom;
-	private String 	prenom;
-	private Date 	dateDeNaissance;
-	private String 	adresse;
-	private String 	ville;
-	private String 	codePostal;
-	private String 	pays;
-	private String 	telephone;
-	private String 	mail;
-	private String 	password;
-	
-	private HashMap <Integer, Location> listeLocations;
-	
-	
-	public Client(String nom, String prenom, Date dateDeNaissance,
-			String adresse, String ville, String codePostal, String pays,
-			String telephone, String mail, String password,
-			HashMap<Integer, Location> listeLocations) {
-		super();
+	private static final long			serialVersionUID	= -2659391453478238804L;
+	private int							id;
+	private String						nom;
+	private String						prenom;
+	private Date						dateDeNaissance;
+	private String						adresse;
+	private String						ville;
+	private String						codePostal;
+	private String						pays;
+	private String						telephone;
+	private String						mail;
+	private String						password;
+
+	private HashMap<Integer, Location>	listeLocations;
+
+	public Client(String nom, String prenom, Date dateDeNaissance, String adresse, String ville, String codePostal,
+			String pays, String telephone, String mail, String password, HashMap<Integer, Location> listeLocations) {
+		super ();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateDeNaissance = dateDeNaissance;
@@ -42,80 +45,104 @@ public class Client implements java.io.Serializable {
 	}
 
 	public Client() {
-		
+
 	}
 
-	public int getId() {
+	@Id
+	@GeneratedValue
+	public int getId () {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId ( int id ) {
 		this.id = id;
 	}
-	public String getPassword() {
+
+	public String getPassword () {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword ( String password ) {
 		this.password = password;
 	}
-	public String getNom() {
+
+	public String getNom () {
 		return nom;
 	}
-	public void setNom(String nom) {
+
+	public void setNom ( String nom ) {
 		this.nom = nom;
 	}
-	public String getPrenom() {
+
+	public String getPrenom () {
 		return prenom;
 	}
-	public void setPrenom(String prenom) {
+
+	public void setPrenom ( String prenom ) {
 		this.prenom = prenom;
 	}
-	public Date getDateDeNaissance() {
+
+	public Date getDateDeNaissance () {
 		return dateDeNaissance;
 	}
-	public void setDateDeNaissance(Date dateDeNaissance) {
+
+	public void setDateDeNaissance ( Date dateDeNaissance ) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
-	public String getAdresse() {
+
+	public String getAdresse () {
 		return adresse;
 	}
-	public void setAdresse(String adresse) {
+
+	public void setAdresse ( String adresse ) {
 		this.adresse = adresse;
 	}
-	public String getVille() {
+
+	public String getVille () {
 		return ville;
 	}
-	public void setVille(String ville) {
+
+	public void setVille ( String ville ) {
 		this.ville = ville;
 	}
-	public String getCodePostal() {
+
+	public String getCodePostal () {
 		return codePostal;
 	}
-	public void setCodePostal(String codePostal) {
+
+	public void setCodePostal ( String codePostal ) {
 		this.codePostal = codePostal;
 	}
-	public String getPays() {
+
+	public String getPays () {
 		return pays;
 	}
-	public void setPays(String pays) {
+
+	public void setPays ( String pays ) {
 		this.pays = pays;
 	}
-	public String getTelephone() {
+
+	public String getTelephone () {
 		return telephone;
 	}
-	public void setTelephone(String telephone) {
+
+	public void setTelephone ( String telephone ) {
 		this.telephone = telephone;
 	}
-	public String getMail() {
+
+	public String getMail () {
 		return mail;
 	}
-	public void setMail(String mail) {
+
+	public void setMail ( String mail ) {
 		this.mail = mail;
 	}
-	public HashMap<Integer, Location> getListeLocations() {
+
+	public HashMap<Integer, Location> getListeLocations () {
 		return listeLocations;
 	}
-	public void setListeLocations(HashMap<Integer, Location> listeLocations) {
+
+	public void setListeLocations ( HashMap<Integer, Location> listeLocations ) {
 		this.listeLocations = listeLocations;
 	}
 }
