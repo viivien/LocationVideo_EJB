@@ -2,22 +2,35 @@ package fr.epsi.location.pojo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table ( name = "video" )
 public class Video implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long	serialVersionUID	= 602800370154442392L;
+	@Id
+	@GeneratedValue ( strategy = GenerationType.AUTO )
+	@Column ( name = "vid_id", nullable = false )
 	private int					id;
+	@Column ( name = "vid_titre", nullable = false )
 	private String				titre;
+	@Column ( name = "vid_duree", nullable = false )
 	private int					duree;
+	@Column ( name = "vid_datesortie", nullable = false )
 	private Date				dateSortie;
+	@Column ( name = "vid_synopsis", nullable = false )
 	private String				synopsis;
+	@Column ( name = "vid_idcat", nullable = false )
 	private Categorie			categorie;
 
 	public Video(String titre, int duree, Date dateSortie, String synopsis, Categorie categorie) {
@@ -33,8 +46,6 @@ public class Video implements java.io.Serializable {
 
 	}
 
-	@Id
-	@GeneratedValue
 	public int getId () {
 		return id;
 	}
@@ -75,6 +86,7 @@ public class Video implements java.io.Serializable {
 		this.synopsis = synopsis;
 	}
 
+	@OneToOne
 	public Categorie getCategorie () {
 		return categorie;
 	}

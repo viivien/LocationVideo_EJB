@@ -3,27 +3,43 @@ package fr.epsi.location.pojo;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table ( name = "client" )
 public class Client implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long			serialVersionUID	= -2659391453478238804L;
+	@Id
+	@GeneratedValue ( strategy = GenerationType.AUTO )
+	@Column ( name = "cli_id", nullable = false )
 	private int							id;
+	@Column ( name = "cli_nom", nullable = false )
 	private String						nom;
+	@Column ( name = "cli_prenom", nullable = false )
 	private String						prenom;
+	@Column ( name = "cli_datedenaissance", nullable = false )
 	private Date						dateDeNaissance;
+	@Column ( name = "cli_adresse", nullable = false )
 	private String						adresse;
+	@Column ( name = "cli_ville", nullable = false )
 	private String						ville;
+	@Column ( name = "cli_cp", nullable = false )
 	private String						codePostal;
-	private String						pays;
+	@Column ( name = "cli_telephone", nullable = false )
 	private String						telephone;
+	@Column ( name = "cli_email", nullable = false )
 	private String						mail;
+	@Column ( name = "cli_password", nullable = false )
 	private String						password;
 
 	private HashMap<Integer, Location>	listeLocations;
@@ -37,7 +53,6 @@ public class Client implements java.io.Serializable {
 		this.adresse = adresse;
 		this.ville = ville;
 		this.codePostal = codePostal;
-		this.pays = pays;
 		this.telephone = telephone;
 		this.mail = mail;
 		this.password = password;
@@ -48,8 +63,6 @@ public class Client implements java.io.Serializable {
 
 	}
 
-	@Id
-	@GeneratedValue
 	public int getId () {
 		return id;
 	}
@@ -114,14 +127,6 @@ public class Client implements java.io.Serializable {
 		this.codePostal = codePostal;
 	}
 
-	public String getPays () {
-		return pays;
-	}
-
-	public void setPays ( String pays ) {
-		this.pays = pays;
-	}
-
 	public String getTelephone () {
 		return telephone;
 	}
@@ -138,6 +143,7 @@ public class Client implements java.io.Serializable {
 		this.mail = mail;
 	}
 
+	@OneToMany ( mappedBy = "client" )
 	public HashMap<Integer, Location> getListeLocations () {
 		return listeLocations;
 	}

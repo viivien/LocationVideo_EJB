@@ -2,19 +2,29 @@ package fr.epsi.location.pojo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table ( name = "exemplaire" )
 public class Exemplaire implements java.io.Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long	serialVersionUID	= -8548195354813978213L;
+	@Id
+	@GeneratedValue ( strategy = GenerationType.AUTO )
+	@Column ( name = "exe_id", nullable = false )
 	private int					id;
+	@Column ( name = "exe_dateachat", nullable = false )
 	private Date				dateAchat;
+	@Column ( name = "exe_idvideo", nullable = false )
 	private Video				video;
 
 	public Exemplaire(Date dateAchat, Video video) {
@@ -27,8 +37,6 @@ public class Exemplaire implements java.io.Serializable {
 
 	}
 
-	@Id
-	@GeneratedValue
 	public int getId () {
 		return id;
 	}
@@ -45,6 +53,7 @@ public class Exemplaire implements java.io.Serializable {
 		this.dateAchat = dateAchat;
 	}
 
+	@OneToOne
 	public Video getVideo () {
 		return video;
 	}

@@ -27,7 +27,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Categorie> getListeCategories () {
-		Query query = entityManager.createQuery ("FROM CATEGORIE");
+		Query query = entityManager.createQuery ("from Categorie");
 		return query.getResultList ();
 	}
 
@@ -38,7 +38,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public void modifierCategorie ( Categorie categorie ) {
-		entityManager.merge (categorie);
+		entityManager.refresh (categorie);
 	}
 
 	@Override
@@ -54,13 +54,13 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Client> getListeClients () {
-		Query query = entityManager.createQuery ("FROM CLIENT");
+		Query query = entityManager.createQuery ("from Client");
 		return query.getResultList ();
 	}
 
 	@Override
 	public Client getClientParIdentifiant ( String identifiant ) {
-		String MaClause = "FROM CLIENT WHERE cli_ ='" + identifiant + "'";
+		String MaClause = "from Client where cli_ ='" + identifiant + "'";
 		Query query = entityManager.createQuery (MaClause);
 		if (query.getResultList ().size () > 0)
 			return (Client) query.getResultList ().get (0);
@@ -74,7 +74,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public void modifierClient ( Client client ) {
-		entityManager.merge (client);
+		entityManager.refresh (client);
 	}
 
 	@Override
@@ -90,13 +90,13 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Exemplaire> getListeExemplaires () {
-		Query query = entityManager.createQuery ("FROM EXEMPLAIRE");
+		Query query = entityManager.createQuery ("from Exemplaire");
 		return query.getResultList ();
 	}
 
 	@Override
 	public List<Exemplaire> getListeExemplairesParVideo ( int idVideo ) {
-		String MaClause = "FROM EXEMPLAIRE WHERE exe_idvideo = '" + idVideo + "'";
+		String MaClause = "from Exemplaire where exe_idvideo = '" + idVideo + "'";
 		Query query = entityManager.createQuery (MaClause);
 		if (query.getResultList ().size () > 0)
 			return query.getResultList ();
@@ -110,7 +110,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public void modifierExemplaire ( Exemplaire exemplaire ) {
-		entityManager.merge (exemplaire);
+		entityManager.refresh (exemplaire);
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Location> getListeLocations () {
-		Query query = entityManager.createQuery ("FROM LOCATION");
+		Query query = entityManager.createQuery ("from Location");
 		return query.getResultList ();
 	}
 
@@ -137,7 +137,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public void modifierLocation ( Location location ) {
-		entityManager.merge (location);
+		entityManager.refresh (location);
 	}
 
 	@Override
@@ -153,13 +153,13 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Video> getListeVideos () {
-		Query query = entityManager.createQuery ("FROM VIDEO");
+		Query query = entityManager.createQuery ("from Video");
 		return query.getResultList ();
 	}
 
 	@Override
 	public List<Video> getListeVideosParCategorie ( int idCategorie ) {
-		Query query = entityManager.createQuery ("FROM VIDEO WHERE vid_idcat = '" + idCategorie + "'");
+		Query query = entityManager.createQuery ("from Video where Video.categorie = '" + idCategorie + "'");
 		return query.getResultList ();
 	}
 
@@ -170,7 +170,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public void modifierVideo ( Video video ) {
-		entityManager.merge (video);
+		entityManager.refresh (video);
 	}
 
 	@Override
