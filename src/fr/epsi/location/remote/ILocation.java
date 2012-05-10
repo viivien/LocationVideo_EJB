@@ -29,7 +29,7 @@ public interface ILocation {
 
 	public List<Client> getListeClients ();
 
-	public Client getClientParIdentifiant ( String identifiant );
+	// public Client getClientParIdentifiant ( String identifiant );
 
 	public void ajouterClient ( Client client );
 

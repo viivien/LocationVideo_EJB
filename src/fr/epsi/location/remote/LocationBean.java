@@ -2,7 +2,7 @@ package fr.epsi.location.remote;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -13,10 +13,10 @@ import fr.epsi.location.pojo.Exemplaire;
 import fr.epsi.location.pojo.Location;
 import fr.epsi.location.pojo.Video;
 
-@Stateful
+@Stateless
 public class LocationBean implements ILocation {
 
-	@PersistenceContext ( unitName = "LocationVideo" )
+	@PersistenceContext ( unitName = "LocationVideoPersistence" )
 	private EntityManager	entityManager;
 
 	// ***************** Categorie *****************
@@ -58,14 +58,14 @@ public class LocationBean implements ILocation {
 		return query.getResultList ();
 	}
 
-	@Override
-	public Client getClientParIdentifiant ( String identifiant ) {
-		String MaClause = "from Client where cli_ ='" + identifiant + "'";
-		Query query = entityManager.createQuery (MaClause);
-		if (query.getResultList ().size () > 0)
-			return (Client) query.getResultList ().get (0);
-		return null;
-	}
+	// @Override
+	// public Client getClientParIdentifiant ( String identifiant ) {
+	// String MaClause = "from Client where cli_ ='" + identifiant + "'";
+	// Query query = entityManager.createQuery (MaClause);
+	// if (query.getResultList ().size () > 0)
+	// return (Client) query.getResultList ().get (0);
+	// return null;
+	// }
 
 	@Override
 	public void ajouterClient ( Client client ) {
@@ -96,8 +96,8 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Exemplaire> getListeExemplairesParVideo ( int idVideo ) {
-		String MaClause = "from Exemplaire where exe_idvideo = '" + idVideo + "'";
-		Query query = entityManager.createQuery (MaClause);
+		Query query = entityManager.createQuery ("from Exemplaire where Exemplaire.id = :id").setParameter ("id",
+				idVideo);
 		if (query.getResultList ().size () > 0)
 			return query.getResultList ();
 		return null;
@@ -159,7 +159,8 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Video> getListeVideosParCategorie ( int idCategorie ) {
-		Query query = entityManager.createQuery ("from Video where Video.categorie = '" + idCategorie + "'");
+		Query query = entityManager.createQuery ("from Video where Video.categorie = :categorie").setParameter (
+				"categorie", idCategorie);
 		return query.getResultList ();
 	}
 
