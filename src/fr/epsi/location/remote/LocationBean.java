@@ -16,9 +16,9 @@ import fr.epsi.location.pojo.Video;
 @Stateless
 public class LocationBean implements ILocation {
 
-	@PersistenceContext ( unitName = "LocationVideoPersistence" )
+	@PersistenceContext ( unitName = "LocationBean" )
 	private EntityManager	entityManager;
-
+	
 	// ***************** Categorie *****************
 	@Override
 	public Categorie getCategorie ( int idCategorie ) {
