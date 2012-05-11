@@ -18,7 +18,7 @@ public class LocationBean implements ILocation {
 
 	@PersistenceContext ( unitName = "LocationBean" )
 	private EntityManager	entityManager;
-	
+
 	// ***************** Categorie *****************
 	@Override
 	public Categorie getCategorie ( int idCategorie ) {
@@ -58,14 +58,16 @@ public class LocationBean implements ILocation {
 		return query.getResultList ();
 	}
 
-	// @Override
-	// public Client getClientParIdentifiant ( String identifiant ) {
-	// String MaClause = "from Client where cli_ ='" + identifiant + "'";
-	// Query query = entityManager.createQuery (MaClause);
-	// if (query.getResultList ().size () > 0)
-	// return (Client) query.getResultList ().get (0);
-	// return null;
-	// }
+	@Override
+	public Client getClientParIdentifiants ( String email, String motDePasse ) {
+		Query query = entityManager
+				.createQuery ("from Client where Client.mail = :mail and Client.password = :password")
+				.setParameter ("mail", email).setParameter ("password", motDePasse);
+		if (!query.getResultList ().isEmpty ())
+			return (Client) query.getResultList ().get (0);
+		else
+			return null;
+	}
 
 	@Override
 	public void ajouterClient ( Client client ) {
