@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,7 +25,8 @@ public class Exemplaire implements java.io.Serializable {
 	private int					id;
 	@Column ( name = "exe_dateachat", nullable = false )
 	private Date				dateAchat;
-	
+	@OneToOne
+	@JoinColumn(name="exe_idvideo")
 	private Video				video;
 
 	public Exemplaire(Date dateAchat, Video video) {

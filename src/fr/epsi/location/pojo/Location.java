@@ -30,8 +30,11 @@ public class Location implements java.io.Serializable {
 	private double				prixLocation;
 	@Column ( name = "loc_nbHeureLocation", nullable = false )
 	private int					nbHeuresLocation;
-	
+	@OneToOne
+	@JoinColumn(name="loc_idexemplaire")
 	private Exemplaire			exemplaire;
+	@OneToOne
+	@JoinColumn(name="loc_idclient")
 	private Client				client;
 
 	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation, int nbHeuresLocation) {
@@ -54,7 +57,6 @@ public class Location implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@OneToOne
 	public Exemplaire getExemplaire () {
 		return exemplaire;
 	}
@@ -87,7 +89,6 @@ public class Location implements java.io.Serializable {
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
 	
-	@OneToOne
 	public Client getClient () {
 		return client;
 	}

@@ -33,7 +33,8 @@ public class Video implements java.io.Serializable {
 	private Date				dateSortie;
 	@Column ( name = "vid_synopsis", nullable = false )
 	private String				synopsis;
-	
+	@OneToOne
+	@JoinColumn(name="vid_idcat")
 	private Categorie			categorie;
 
 	public Video(String titre, int duree, Date dateSortie, String synopsis, Categorie categorie) {

@@ -131,7 +131,7 @@ public class LocationBean implements ILocation {
 	@Override
 	public List<Location> getListeLocationsDuClient ( int idClient) {
 		Query query = entityManager.
-						createQuery("from Location where client = :idclient").
+						createQuery("from Location where loc_idclient = :idclient").
 						setParameter("idclient", idClient);
 		return query.getResultList();
 	}

@@ -46,10 +46,10 @@ public class Client implements java.io.Serializable {
 	@Column ( name = "cli_password", nullable = false )
 	private String						password;
 	
-	/*
+	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="client", fetch=FetchType.EAGER)
 	private List<Location>	listeLocations = new ArrayList<Location>();
-	*/
+	
 	public Client(String nom, String prenom, Date dateDeNaissance, String adresse, String ville, String codePostal,
 			String pays, String telephone, String mail, String password, List<Location> listeLocations) {
 		super ();
@@ -62,7 +62,7 @@ public class Client implements java.io.Serializable {
 		this.telephone = telephone;
 		this.email = mail;
 		this.password = password;
-		//this.listeLocations = listeLocations;
+		this.listeLocations = listeLocations;
 	}
 
 	public Client() {
@@ -148,7 +148,7 @@ public class Client implements java.io.Serializable {
 	public void setMail ( String mail ) {
 		this.email = mail;
 	}
-/*
+
 	public List<Location> getListeLocations () {
 		return listeLocations;
 	}
@@ -156,12 +156,4 @@ public class Client implements java.io.Serializable {
 	public void setListeLocations ( List<Location> listeLocations ) {
 		this.listeLocations = listeLocations;
 	}
-	*/
-	/*public HashMap<Integer, Location> getListeLocations () {
-		return listeLocations;
-	}
-
-	public void setListeLocations ( HashMap<Integer, Location> listeLocations ) {
-		this.listeLocations = listeLocations;
-	}*/
 }
