@@ -186,7 +186,7 @@ public class LocationBean implements ILocation {
 	
 	@Override
 	public List<Video> getListeVideosParCategorie ( int idCategorie ) {
-		Query query = entityManager.createQuery ("from Video where categorie = :categorie").setParameter (
+		Query query = entityManager.createQuery ("from Video where vid_idcat = :categorie").setParameter (
 				"categorie", idCategorie);
 		return query.getResultList ();
 	}

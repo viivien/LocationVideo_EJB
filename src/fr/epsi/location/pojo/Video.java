@@ -33,6 +33,8 @@ public class Video implements java.io.Serializable {
 	private Date				dateSortie;
 	@Column ( name = "vid_synopsis", nullable = false )
 	private String				synopsis;
+	@Column ( name = "vid_prix", nullable = false )
+	private float				prix;
 	@OneToOne
 	@JoinColumn(name="vid_idcat")
 	private Categorie			categorie;
@@ -90,6 +92,14 @@ public class Video implements java.io.Serializable {
 		this.synopsis = synopsis;
 	}
 
+	public float getPrix () {
+		return prix;
+	}
+
+	public void setPrix ( float prix ) {
+		this.prix = prix;
+	}
+	
 	@OneToOne
 	public Categorie getCategorie () {
 		return categorie;
