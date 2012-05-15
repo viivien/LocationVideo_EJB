@@ -53,6 +53,8 @@ public interface ILocation {
 	// Location
 	public Location getLocation ( int idLocation );
 
+	public List<Location> getListeLocationsDuClient ( int idClient);
+	
 	public List<Location> getListeLocations ();
 
 	public void ajouterLocation ( Location location );
@@ -65,6 +67,10 @@ public interface ILocation {
 	public Video getVideo ( int idVideo );
 
 	public List<Video> getListeVideos ();
+	
+	public List<Video> getListeNouveautesVideos ();
+	
+	public List<Video> getTop10Videos ();
 
 	public List<Video> getListeVideosParCategorie ( int idCategorie );
 

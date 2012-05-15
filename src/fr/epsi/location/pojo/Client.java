@@ -1,23 +1,27 @@
 package fr.epsi.location.pojo;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table ( name = "client" )
 public class Client implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long			serialVersionUID	= -2659391453478238804L;
 	@Id
 	@GeneratedValue ( strategy = GenerationType.AUTO )
@@ -38,14 +42,16 @@ public class Client implements java.io.Serializable {
 	@Column ( name = "cli_telephone", nullable = false )
 	private String						telephone;
 	@Column ( name = "cli_email", nullable = false )
-	private String						mail;
+	private String						email;
 	@Column ( name = "cli_password", nullable = false )
 	private String						password;
-
-	private HashMap<Integer, Location>	listeLocations;
-
+	
+	/*
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="client", fetch=FetchType.EAGER)
+	private List<Location>	listeLocations = new ArrayList<Location>();
+	*/
 	public Client(String nom, String prenom, Date dateDeNaissance, String adresse, String ville, String codePostal,
-			String pays, String telephone, String mail, String password, HashMap<Integer, Location> listeLocations) {
+			String pays, String telephone, String mail, String password, List<Location> listeLocations) {
 		super ();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -54,9 +60,9 @@ public class Client implements java.io.Serializable {
 		this.ville = ville;
 		this.codePostal = codePostal;
 		this.telephone = telephone;
-		this.mail = mail;
+		this.email = mail;
 		this.password = password;
-		this.listeLocations = listeLocations;
+		//this.listeLocations = listeLocations;
 	}
 
 	public Client() {
@@ -136,19 +142,26 @@ public class Client implements java.io.Serializable {
 	}
 
 	public String getMail () {
-		return mail;
+		return email;
 	}
 
 	public void setMail ( String mail ) {
-		this.mail = mail;
+		this.email = mail;
 	}
-
-	@OneToMany ( mappedBy = "client" )
-	public HashMap<Integer, Location> getListeLocations () {
+/*
+	public List<Location> getListeLocations () {
+		return listeLocations;
+	}
+	
+	public void setListeLocations ( List<Location> listeLocations ) {
+		this.listeLocations = listeLocations;
+	}
+	*/
+	/*public HashMap<Integer, Location> getListeLocations () {
 		return listeLocations;
 	}
 
 	public void setListeLocations ( HashMap<Integer, Location> listeLocations ) {
 		this.listeLocations = listeLocations;
-	}
+	}*/
 }

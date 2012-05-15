@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hsqldb.types.Binary;
+
 import fr.epsi.location.pojo.Categorie;
 import fr.epsi.location.pojo.Client;
 import fr.epsi.location.pojo.Exemplaire;
@@ -61,8 +63,8 @@ public class LocationBean implements ILocation {
 	@Override
 	public Client getClientParIdentifiants ( String email, String motDePasse ) {
 		Query query = entityManager
-				.createQuery ("from Client where Client.mail = :mail and Client.password = :password")
-				.setParameter ("mail", email).setParameter ("password", motDePasse);
+				.createQuery ("from Client where email = :email and password = :password")
+				.setParameter ("email", email).setParameter ("password", motDePasse);
 		if (!query.getResultList ().isEmpty ())
 			return (Client) query.getResultList ().get (0);
 		else
@@ -127,6 +129,14 @@ public class LocationBean implements ILocation {
 	}
 
 	@Override
+	public List<Location> getListeLocationsDuClient ( int idClient) {
+		Query query = entityManager.
+						createQuery("from Location where client = :idclient").
+						setParameter("idclient", idClient);
+		return query.getResultList();
+	}
+	
+	@Override
 	public List<Location> getListeLocations () {
 		Query query = entityManager.createQuery ("from Location");
 		return query.getResultList ();
@@ -158,10 +168,25 @@ public class LocationBean implements ILocation {
 		Query query = entityManager.createQuery ("from Video");
 		return query.getResultList ();
 	}
+	
+	@Override
+	public List<Video> getListeNouveautesVideos () {
+		Query query = entityManager.createQuery ("from Video order by id desc");
+		return query.getResultList ();
+	}
 
 	@Override
+	public List<Video> getTop10Videos () {
+		Query query = entityManager.createQuery("SELECT v.vid_titre, count(exe_id) as nombre_de_locations "+
+										"FROM location l inner join exemplaire e ON l.exemplaire = e "+ 
+										"INNER JOIN video v ON e.video = v "+
+										"group by v.titre");
+		return query.getResultList ();
+	}
+	
+	@Override
 	public List<Video> getListeVideosParCategorie ( int idCategorie ) {
-		Query query = entityManager.createQuery ("from Video where Video.categorie = :categorie").setParameter (
+		Query query = entityManager.createQuery ("from Video where categorie = :categorie").setParameter (
 				"categorie", idCategorie);
 		return query.getResultList ();
 	}

@@ -1,15 +1,22 @@
 package fr.epsi.location.pojo;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionOfElements;
 
 @Entity
 @Table ( name = "categorie" )
-public class Categorie implements java.io.Serializable {
+public class Categorie implements Serializable {
 
 	/**
 	 * 
@@ -22,6 +29,9 @@ public class Categorie implements java.io.Serializable {
 	@Column ( name = "cat_libelle", nullable = false )
 	private String				libelle;
 
+	@CollectionOfElements
+	private List<Video> listeVideos;
+	
 	public Categorie() {
 
 	}
@@ -45,5 +55,15 @@ public class Categorie implements java.io.Serializable {
 
 	public void setLibelle ( String libelle ) {
 		this.libelle = libelle;
+	}
+	
+	@OneToMany
+	@JoinTable
+	public List<Video> getListeVideos() {
+		return listeVideos;
+	}
+	
+	public void setListeVideos(List<Video> listeVideos) {
+		this.listeVideos = listeVideos;
 	}
 }

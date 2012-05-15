@@ -24,7 +24,7 @@ public class Exemplaire implements java.io.Serializable {
 	private int					id;
 	@Column ( name = "exe_dateachat", nullable = false )
 	private Date				dateAchat;
-	@Column ( name = "exe_idvideo", nullable = false )
+	
 	private Video				video;
 
 	public Exemplaire(Date dateAchat, Video video) {

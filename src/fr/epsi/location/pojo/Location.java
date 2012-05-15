@@ -2,11 +2,15 @@ package fr.epsi.location.pojo;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,23 +19,19 @@ import javax.persistence.Table;
 @Table ( name = "location" )
 public class Location implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 8214238646469550769L;
 	@Id
 	@GeneratedValue ( strategy = GenerationType.AUTO )
 	@Column ( name = "loc_id", nullable = false )
-	private int					id;
-	@Column ( name = "loc_idexemplaire", nullable = false )
-	private Exemplaire			exemplaire;
+	private int					id;	
 	@Column ( name = "loc_date", nullable = false )
 	private Date				dateLocation;
 	@Column ( name = "loc_prix", nullable = false )
 	private double				prixLocation;
 	@Column ( name = "loc_nbHeureLocation", nullable = false )
 	private int					nbHeuresLocation;
-	@Column ( name = "loc_idclient", nullable = false )
+	
+	private Exemplaire			exemplaire;
 	private Client				client;
 
 	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation, int nbHeuresLocation) {
@@ -86,8 +86,8 @@ public class Location implements java.io.Serializable {
 	public void setNbHeuresLocation ( int nbHeuresLocation ) {
 		this.nbHeuresLocation = nbHeuresLocation;
 	}
-
-	@OneToMany
+	
+	@OneToOne
 	public Client getClient () {
 		return client;
 	}
