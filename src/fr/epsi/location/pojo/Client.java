@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CollectionOfElements;
+import org.joda.time.DateTime;
 
 @Entity
 @Table ( name = "client" )
@@ -32,7 +33,7 @@ public class Client implements java.io.Serializable {
 	@Column ( name = "cli_prenom", nullable = false )
 	private String						prenom;
 	@Column ( name = "cli_datedenaissance", nullable = false )
-	private Date						dateDeNaissance;
+	private DateTime						dateDeNaissance;
 	@Column ( name = "cli_adresse", nullable = false )
 	private String						adresse;
 	@Column ( name = "cli_ville", nullable = false )
@@ -50,7 +51,7 @@ public class Client implements java.io.Serializable {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="client", fetch=FetchType.EAGER)
 	private List<Location>	listeLocations = new ArrayList<Location>();
 	
-	public Client(String nom, String prenom, Date dateDeNaissance, String adresse, String ville, String codePostal,
+	public Client(String nom, String prenom, DateTime dateDeNaissance, String adresse, String ville, String codePostal,
 			String pays, String telephone, String mail, String password, List<Location> listeLocations) {
 		super ();
 		this.nom = nom;
@@ -101,11 +102,11 @@ public class Client implements java.io.Serializable {
 		this.prenom = prenom;
 	}
 
-	public Date getDateDeNaissance () {
+	public DateTime getDateDeNaissance () {
 		return dateDeNaissance;
 	}
 
-	public void setDateDeNaissance ( Date dateDeNaissance ) {
+	public void setDateDeNaissance ( DateTime dateDeNaissance ) {
 		this.dateDeNaissance = dateDeNaissance;
 	}
 

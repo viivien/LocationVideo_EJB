@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table ( name = "video" )
 public class Video implements java.io.Serializable {
@@ -30,7 +32,7 @@ public class Video implements java.io.Serializable {
 	@Column ( name = "vid_duree", nullable = false )
 	private int					duree;
 	@Column ( name = "vid_datesortie", nullable = false )
-	private Date				dateSortie;
+	private DateTime				dateSortie;
 	@Column ( name = "vid_synopsis", nullable = false )
 	private String				synopsis;
 	@Column ( name = "vid_prix", nullable = false )
@@ -39,7 +41,7 @@ public class Video implements java.io.Serializable {
 	@JoinColumn(name="vid_idcat")
 	private Categorie			categorie;
 
-	public Video(String titre, int duree, Date dateSortie, String synopsis, Categorie categorie) {
+	public Video(String titre, int duree, DateTime dateSortie, String synopsis, Categorie categorie) {
 		super ();
 		this.titre = titre;
 		this.duree = duree;
@@ -76,11 +78,11 @@ public class Video implements java.io.Serializable {
 		this.duree = duree;
 	}
 
-	public Date getDateSortie () {
+	public DateTime getDateSortie () {
 		return dateSortie;
 	}
 
-	public void setDateSortie ( Date dateSortie ) {
+	public void setDateSortie ( DateTime dateSortie ) {
 		this.dateSortie = dateSortie;
 	}
 
