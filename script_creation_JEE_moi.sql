@@ -43,7 +43,7 @@ INSERT INTO VIDEO (vid_titre, vid_synopsis, vid_duree, vid_datesortie, vid_prix,
 VALUES ('The Avengers', 'Poursuivant les spectaculaires aventures initiées par Iron man, L''incroyable Hulk, Thor et Captain America, Avengers - basé sur la très populaire bande dessinée Marvel parue en 1963 -constitue l''équipe ultime de super-héros et les réunit pour la première fois à l''écran. Lorsqu''un ennemi inattendu menace la sécurité du monde, Nick Fury, le directeur du SHIELD (l''agence internationale de maintien de la paix) monte de toutes pièces une équipe capable de préserver l''humanité du chaos',
 142, '2012-04-25', 8.00, 2);
 INSERT INTO VIDEO (vid_titre, vid_synopsis, vid_duree, vid_datesortie, vid_prix, vid_idcat) 
-VALUES ('Sans identité', 'Alors qu''il est à Berlin pour donner une conférence, un homme tombe dans le coma, victime d''un accident de voiture. Plus tard, une fois réveillé, il apprend qu''un autre homme a pris son identité et cherche à le tuer. Avec l''aide d’une jeune femme, il va tout mettre en oeuvre pour prouver qui il est.',
+VALUES ('Sans identité', 'Alors qu''il est à Berlin pour donner une conférence, un homme tombe dans le coma, victime d''un accident de voiture. Plus tard, une fois réveillé, il apprend qu''un autre homme a pris son identité et cherche à le tuer. Avec l''aide d''une jeune femme, il va tout mettre en oeuvre pour prouver qui il est.',
 110, '2011-03-02', 5.00, 1);
 INSERT INTO VIDEO (vid_titre, vid_synopsis, vid_duree, vid_datesortie, vid_prix, vid_idcat) 
 VALUES ('Je te promets', 'Inspiré d''une histoire vraie, le film se penche sur la détresse d''un homme dont l''épouse a perdu la mémoire après un accident de voiture. Désemparé, il fait tout pour reconquérir le coeur de sa belle.',
