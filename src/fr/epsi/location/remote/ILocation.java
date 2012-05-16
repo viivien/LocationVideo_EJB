@@ -8,6 +8,7 @@ import fr.epsi.location.pojo.Categorie;
 import fr.epsi.location.pojo.Client;
 import fr.epsi.location.pojo.Exemplaire;
 import fr.epsi.location.pojo.Location;
+import fr.epsi.location.pojo.TypePaiement;
 import fr.epsi.location.pojo.Video;
 
 @Remote
@@ -69,8 +70,6 @@ public interface ILocation {
 	public List<Video> getListeVideos ();
 	
 	public List<Video> getListeNouveautesVideos ();
-	
-	public List<Video> getTop10Videos ();
 
 	public List<Video> getListeVideosParCategorie ( int idCategorie );
 
@@ -79,5 +78,8 @@ public interface ILocation {
 	public void modifierVideo ( Video video );
 
 	public void supprimerVideo ( Video video );
-
+	
+	// TypePaiement
+	
+	public TypePaiement getTypePaiement(String libelle);
 }

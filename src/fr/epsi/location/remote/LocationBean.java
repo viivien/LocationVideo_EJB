@@ -1,5 +1,6 @@
 package fr.epsi.location.remote;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import fr.epsi.location.pojo.Categorie;
 import fr.epsi.location.pojo.Client;
 import fr.epsi.location.pojo.Exemplaire;
 import fr.epsi.location.pojo.Location;
+import fr.epsi.location.pojo.TypePaiement;
 import fr.epsi.location.pojo.Video;
 
 @Stateless
@@ -100,7 +102,7 @@ public class LocationBean implements ILocation {
 
 	@Override
 	public List<Exemplaire> getListeExemplairesParVideo ( int idVideo ) {
-		Query query = entityManager.createQuery ("from Exemplaire where Exemplaire.id = :id").setParameter ("id",
+		Query query = entityManager.createQuery ("from Exemplaire where exe_idvideo = :id").setParameter ("id",
 				idVideo);
 		if (query.getResultList ().size () > 0)
 			return query.getResultList ();
@@ -146,7 +148,7 @@ public class LocationBean implements ILocation {
 	public void ajouterLocation ( Location location ) {
 		entityManager.persist (location);
 	}
-
+	
 	@Override
 	public void modifierLocation ( Location location ) {
 		entityManager.refresh (location);
@@ -174,15 +176,6 @@ public class LocationBean implements ILocation {
 		Query query = entityManager.createQuery ("from Video order by id desc");
 		return query.getResultList ();
 	}
-
-	@Override
-	public List<Video> getTop10Videos () {
-		Query query = entityManager.createQuery("SELECT v.vid_titre, count(exe_id) as nombre_de_locations "+
-										"FROM location l inner join exemplaire e ON l.exemplaire = e "+ 
-										"INNER JOIN video v ON e.video = v "+
-										"group by v.titre");
-		return query.getResultList ();
-	}
 	
 	@Override
 	public List<Video> getListeVideosParCategorie ( int idCategorie ) {
@@ -204,5 +197,13 @@ public class LocationBean implements ILocation {
 	@Override
 	public void supprimerVideo ( Video video ) {
 		entityManager.remove (video);
+	}
+	
+	// TypePaiement
+	
+	@Override
+	public TypePaiement getTypePaiement(String libelle) {
+		return (TypePaiement) entityManager.createQuery("from TypePaiement where typpai_libelle = :libelle")
+					.setParameter("libelle", libelle).getSingleResult();
 	}
 }

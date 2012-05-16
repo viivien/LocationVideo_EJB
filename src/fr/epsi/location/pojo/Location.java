@@ -36,13 +36,17 @@ public class Location implements java.io.Serializable {
 	@OneToOne
 	@JoinColumn(name="loc_idclient")
 	private Client				client;
-
-	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation, int nbHeuresLocation) {
+	@OneToOne
+	@JoinColumn(name="loc_idtyppai")
+	private TypePaiement		typePaiement;
+	
+	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation, int nbHeuresLocation, TypePaiement typePaiement) {
 		super ();
 		this.exemplaire = exemplaire;
 		this.dateLocation = dateLocation;
 		this.prixLocation = prixLocation;
 		this.nbHeuresLocation = nbHeuresLocation;
+		this.typePaiement = typePaiement;
 	}
 
 	public Location() {
@@ -95,5 +99,13 @@ public class Location implements java.io.Serializable {
 
 	public void setClient ( Client client ) {
 		this.client = client;
+	}
+	
+	public TypePaiement getTypePaiement() {
+		return typePaiement;
+	}
+	
+	public void setTypePaiement ( TypePaiement typePaiement ) {
+		this.typePaiement = typePaiement;
 	}
 }
