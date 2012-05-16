@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table ( name = "location" )
 public class Location implements java.io.Serializable {
@@ -25,7 +27,7 @@ public class Location implements java.io.Serializable {
 	@Column ( name = "loc_id", nullable = false )
 	private int					id;	
 	@Column ( name = "loc_date", nullable = false )
-	private Date				dateLocation;
+	private DateTime				dateLocation;
 	@Column ( name = "loc_prix", nullable = false )
 	private double				prixLocation;
 	@Column ( name = "loc_nbHeureLocation", nullable = false )
@@ -40,7 +42,7 @@ public class Location implements java.io.Serializable {
 	@JoinColumn(name="loc_idtyppai")
 	private TypePaiement		typePaiement;
 	
-	public Location(Exemplaire exemplaire, Date dateLocation, double prixLocation, int nbHeuresLocation, TypePaiement typePaiement) {
+	public Location(Exemplaire exemplaire, DateTime dateLocation, double prixLocation, int nbHeuresLocation, TypePaiement typePaiement) {
 		super ();
 		this.exemplaire = exemplaire;
 		this.dateLocation = dateLocation;
@@ -69,11 +71,11 @@ public class Location implements java.io.Serializable {
 		this.exemplaire = exemplaire;
 	}
 
-	public Date getDateLocation () {
+	public DateTime getDateLocation () {
 		return dateLocation;
 	}
 
-	public void setDateLocation ( Date dateLocation ) {
+	public void setDateLocation ( DateTime dateLocation ) {
 		this.dateLocation = dateLocation;
 	}
 

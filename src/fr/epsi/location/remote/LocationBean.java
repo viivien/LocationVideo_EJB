@@ -1,14 +1,11 @@
 package fr.epsi.location.remote;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import org.hsqldb.types.Binary;
 
 import fr.epsi.location.pojo.Categorie;
 import fr.epsi.location.pojo.Client;

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.joda.time.DateTime;
+
 @Entity
 @Table ( name = "exemplaire" )
 public class Exemplaire implements java.io.Serializable {
@@ -24,12 +26,12 @@ public class Exemplaire implements java.io.Serializable {
 	@Column ( name = "exe_id", nullable = false )
 	private int					id;
 	@Column ( name = "exe_dateachat", nullable = false )
-	private Date				dateAchat;
+	private DateTime				dateAchat;
 	@OneToOne
 	@JoinColumn(name="exe_idvideo")
 	private Video				video;
 
-	public Exemplaire(Date dateAchat, Video video) {
+	public Exemplaire(DateTime dateAchat, Video video) {
 		super ();
 		this.dateAchat = dateAchat;
 		this.video = video;
@@ -47,11 +49,11 @@ public class Exemplaire implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Date getDateAchat () {
+	public DateTime getDateAchat () {
 		return dateAchat;
 	}
 
-	public void setDateAchat ( Date dateAchat ) {
+	public void setDateAchat ( DateTime dateAchat ) {
 		this.dateAchat = dateAchat;
 	}
 
