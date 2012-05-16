@@ -1,7 +1,7 @@
 package fr.epsi.location.pojo;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class Video implements java.io.Serializable {
 	@Column ( name = "vid_duree", nullable = false )
 	private int					duree;
 	@Column ( name = "vid_datesortie", nullable = false )
-	private DateTime				dateSortie;
+	private Date				dateSortie;
 	@Column ( name = "vid_synopsis", nullable = false )
 	private String				synopsis;
 	@Column ( name = "vid_prix", nullable = false )
@@ -45,7 +45,7 @@ public class Video implements java.io.Serializable {
 		super ();
 		this.titre = titre;
 		this.duree = duree;
-		this.dateSortie = dateSortie;
+		this.setDateSortie(dateSortie);
 		this.synopsis = synopsis;
 		this.categorie = categorie;
 	}
@@ -79,11 +79,11 @@ public class Video implements java.io.Serializable {
 	}
 
 	public DateTime getDateSortie () {
-		return dateSortie;
+		return new DateTime(dateSortie);
 	}
 
 	public void setDateSortie ( DateTime dateSortie ) {
-		this.dateSortie = dateSortie;
+		this.dateSortie = dateSortie.toDate();
 	}
 
 	public String getSynopsis () {

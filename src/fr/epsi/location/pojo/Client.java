@@ -1,6 +1,6 @@
 package fr.epsi.location.pojo;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +33,7 @@ public class Client implements java.io.Serializable {
 	@Column ( name = "cli_prenom", nullable = false )
 	private String						prenom;
 	@Column ( name = "cli_datedenaissance", nullable = false )
-	private DateTime						dateDeNaissance;
+	private Date						dateDeNaissance;
 	@Column ( name = "cli_adresse", nullable = false )
 	private String						adresse;
 	@Column ( name = "cli_ville", nullable = false )
@@ -56,7 +56,7 @@ public class Client implements java.io.Serializable {
 		super ();
 		this.nom = nom;
 		this.prenom = prenom;
-		this.dateDeNaissance = dateDeNaissance;
+		this.setDateDeNaissance(dateDeNaissance);
 		this.adresse = adresse;
 		this.ville = ville;
 		this.codePostal = codePostal;
@@ -103,11 +103,11 @@ public class Client implements java.io.Serializable {
 	}
 
 	public DateTime getDateDeNaissance () {
-		return dateDeNaissance;
+		return new DateTime(dateDeNaissance);
 	}
 
 	public void setDateDeNaissance ( DateTime dateDeNaissance ) {
-		this.dateDeNaissance = dateDeNaissance;
+		this.dateDeNaissance = dateDeNaissance.toDate();
 	}
 
 	public String getAdresse () {

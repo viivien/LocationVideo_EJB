@@ -26,14 +26,14 @@ public class Exemplaire implements java.io.Serializable {
 	@Column ( name = "exe_id", nullable = false )
 	private int					id;
 	@Column ( name = "exe_dateachat", nullable = false )
-	private DateTime				dateAchat;
+	private Date				dateAchat;
 	@OneToOne
 	@JoinColumn(name="exe_idvideo")
 	private Video				video;
 
 	public Exemplaire(DateTime dateAchat, Video video) {
 		super ();
-		this.dateAchat = dateAchat;
+		this.setDateAchat(dateAchat);
 		this.video = video;
 	}
 
@@ -50,11 +50,11 @@ public class Exemplaire implements java.io.Serializable {
 	}
 
 	public DateTime getDateAchat () {
-		return dateAchat;
+		return new DateTime(dateAchat);
 	}
 
 	public void setDateAchat ( DateTime dateAchat ) {
-		this.dateAchat = dateAchat;
+		this.dateAchat = dateAchat.toDate();
 	}
 
 	@OneToOne

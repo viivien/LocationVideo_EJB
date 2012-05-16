@@ -1,6 +1,6 @@
 package fr.epsi.location.pojo;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ public class Location implements java.io.Serializable {
 	@Column ( name = "loc_id", nullable = false )
 	private int					id;	
 	@Column ( name = "loc_date", nullable = false )
-	private DateTime				dateLocation;
+	private Date				dateLocation;
 	@Column ( name = "loc_prix", nullable = false )
 	private double				prixLocation;
 	@Column ( name = "loc_nbHeureLocation", nullable = false )
@@ -45,7 +45,7 @@ public class Location implements java.io.Serializable {
 	public Location(Exemplaire exemplaire, DateTime dateLocation, double prixLocation, int nbHeuresLocation, TypePaiement typePaiement) {
 		super ();
 		this.exemplaire = exemplaire;
-		this.dateLocation = dateLocation;
+		this.setDateLocation(dateLocation);
 		this.prixLocation = prixLocation;
 		this.nbHeuresLocation = nbHeuresLocation;
 		this.typePaiement = typePaiement;
@@ -72,11 +72,11 @@ public class Location implements java.io.Serializable {
 	}
 
 	public DateTime getDateLocation () {
-		return dateLocation;
+		return new DateTime(dateLocation);
 	}
 
 	public void setDateLocation ( DateTime dateLocation ) {
-		this.dateLocation = dateLocation;
+		this.dateLocation = dateLocation.toDate();
 	}
 
 	public double getPrixLocation () {
